@@ -16,37 +16,76 @@ The project provides a solid foundation for tracking expenses, managing users, a
 
 ---
 
+## Prerequisites
+
+- PHP 8.2+
+- Composer
+- Node.js + npm (for asset builds)
+- A database (SQLite or MySQL)
+
+---
+
 ## Installation
 
 ```bash
 git clone https://github.com/ahmedno1/expense-management.git
 cd expense-management
 composer install
-copy .env.example .env
+cp .env.example .env
 php artisan key:generate
+```
+
+---
+
+## Configuration
+
+1. Update your database connection in `.env`.
+2. Run migrations:
+
+```bash
+php artisan migrate
+```
 
 ---
 
 ## Run the project
+
+```bash
 php artisan serve
+```
 
 Open: http://127.0.0.1:8000
 
 ---
 
-##Project Goals
+## Front-end assets (optional)
+
+```bash
+npm install
+npm run dev
+```
+
+---
+
+## Testing
+
+```bash
+php artisan test
+```
+
+---
+
+## Project Goals
 
 This project is designed as a base for:
 
-Expense CRUD operations
-
-Categorization and reporting
-
-Future analytics and export features
+- Expense CRUD operations
+- Categorization and reporting
+- Future analytics and export features
 
 ---
 
 ## Author
 
-Ahmed Yousef Almouqaid
+Ahmed Yousef Almouqaid  
 GitHub: https://github.com/ahmedno1
