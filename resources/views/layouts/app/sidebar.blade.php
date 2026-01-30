@@ -16,6 +16,38 @@
                         {{ __('Dashboard') }}
                     </flux:sidebar.item>
                     <flux:sidebar.item
+                        icon="chart-bar"
+                        :href="route('summary.index')"
+                        :current="request()->routeIs('summary.index')"
+                        wire:navigate
+                    >
+                        {{ __('Summary') }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item
+                        icon="banknotes"
+                        :href="route('income.index')"
+                        :current="request()->routeIs('income.index')"
+                        wire:navigate
+                    >
+                        {{ __('Income Sources') }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item
+                        icon="clipboard-document-list"
+                        :href="route('budgets.index')"
+                        :current="request()->routeIs('budgets.index')"
+                        wire:navigate
+                    >
+                        {{ __('Budgets') }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item
+                        icon="receipt-percent"
+                        :href="route('expenses.index')"
+                        :current="request()->routeIs('expenses.index')"
+                        wire:navigate
+                    >
+                        {{ __('Expenses') }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item
                         icon="layout-grid"
                         :href="route('categories.index')"
                         :current="request()->routeIs('categories.index')"
@@ -99,6 +131,7 @@
 
         {{ $slot }}
 
+        @livewireScripts
         @fluxScripts
     </body>
 </html>
