@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Pages\Advisor\Index as AdvisorIndex;
 use App\Livewire\Pages\Budgets\Index as BudgetsIndex;
 use App\Livewire\Pages\Categories\Index as CategoriesIndex;
 use App\Livewire\Pages\Expenses\Index as ExpensesIndex;
@@ -26,6 +27,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('expenses.index');
     Route::get('/categories', CategoriesIndex::class)
         ->name('categories.index');
+    Route::get('/advisor', AdvisorIndex::class)
+        ->name('advisor.index');
 });
 
 require __DIR__.'/settings.php';

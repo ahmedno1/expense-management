@@ -55,6 +55,14 @@
                     >
                         {{ __('Categories') }}
                     </flux:sidebar.item>
+                    <flux:sidebar.item
+                        icon="sparkles"
+                        :href="route('advisor.index')"
+                        :current="request()->routeIs('advisor.index')"
+                        wire:navigate
+                    >
+                        {{ __('AI Advisor') }}
+                    </flux:sidebar.item>
                 </flux:sidebar.group>
             </flux:sidebar.nav>
 
