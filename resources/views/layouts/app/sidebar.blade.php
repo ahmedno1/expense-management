@@ -139,6 +139,7 @@
 
         {{ $slot }}
 
+        @stack('scripts')
         @livewireScripts
         @fluxScripts
     </body>

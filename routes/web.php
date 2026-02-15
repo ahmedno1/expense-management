@@ -3,6 +3,7 @@
 use App\Livewire\Pages\Advisor\Index as AdvisorIndex;
 use App\Livewire\Pages\Budgets\Index as BudgetsIndex;
 use App\Livewire\Pages\Categories\Index as CategoriesIndex;
+use App\Livewire\Pages\Dashboard\Index as DashboardIndex;
 use App\Livewire\Pages\Expenses\Index as ExpensesIndex;
 use App\Livewire\Pages\Income\Index as IncomeIndex;
 use App\Livewire\Pages\Summary\Index as SummaryIndex;
@@ -12,7 +13,7 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::view('dashboard', 'dashboard')
+Route::get('/dashboard', DashboardIndex::class)
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 

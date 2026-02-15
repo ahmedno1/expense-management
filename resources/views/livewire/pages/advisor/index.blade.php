@@ -35,22 +35,20 @@
 
             <flux:button
                 variant="primary"
-                wire:click="improvePlan"
+                wire:click="requestRecommendation"
                 wire:loading.attr="disabled"
-                wire:target="improvePlan"
+                wire:target="requestRecommendation"
+                :disabled="$isGenerating"
             >
-                <span wire:loading.remove wire:target="improvePlan">
-                    {{ __('Improve My Plan (This Month)') }}
-                </span>
-                <span wire:loading wire:target="improvePlan">
-                    {{ __('Analyzing...') }}
-                </span>
+                {{ $isGenerating ? __('Analyzing...') : __('Improve My Plan (This Month)') }}
             </flux:button>
         </div>
 
-        <div wire:loading wire:target="improvePlan" class="mt-3 text-sm text-zinc-600 dark:text-zinc-400">
-            {{ __('Gathering this month\'s data and asking the advisor...') }}
-        </div>
+        @if ($isGenerating)
+            <div class="mt-3 text-sm text-zinc-600 dark:text-zinc-400">
+                {{ __('Gathering this month\'s data and asking the advisor...') }}
+            </div>
+        @endif
     </div>
 
     <div class="rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900">
@@ -76,4 +74,61 @@
             @endif
         </div>
     </div>
+
+    @once
+        @push('scripts')
+            <script src="https://js.puter.com/v2/"></script>
+            <script>
+                document.addEventListener('livewire:init', () => {
+                    window.addEventListener('advisor:generate', async (event) => {
+                        const detail = event.detail ?? {};
+                        const prompt = detail.prompt ?? '';
+                        const component = @this;
+
+                        if (!prompt) {
+                            component.call('handleAdvisorError', 'Unable to build the advisor prompt. Please try again.');
+                            return;
+                        }
+
+                        if (!window.puter || !window.puter.ai || typeof window.puter.ai.chat !== 'function') {
+                            component.call('handleAdvisorError', 'Puter.js is not available. Please sign in to Puter and refresh.');
+                            return;
+                        }
+
+                        try {
+                            if (window.puter.auth && typeof window.puter.auth.isSignedIn === 'function') {
+                                const signedIn = await window.puter.auth.isSignedIn();
+                                if (!signedIn) {
+                                    component.call('handleAdvisorError', 'Please sign in to Puter to use the AI advisor.');
+                                    return;
+                                }
+                            }
+
+                            const response = await window.puter.ai.chat(prompt, { model: 'gpt-5-nano' });
+                            let content = response?.message?.content ?? response?.content ?? response?.text ?? response?.message ?? '';
+
+                            if (!content && typeof response === 'string') {
+                                content = response;
+                            }
+
+                            if (!content) {
+                                content = JSON.stringify(response);
+                            }
+
+                            content = String(content).trim();
+
+                            if (!content) {
+                                component.call('handleAdvisorError', 'The AI response was empty. Please try again.');
+                                return;
+                            }
+
+                            component.call('saveRecommendation', content, prompt);
+                        } catch (error) {
+                            component.call('handleAdvisorError', 'Puter AI request failed. Please try again.');
+                        }
+                    });
+                });
+            </script>
+        @endpush
+    @endonce
 </div>
