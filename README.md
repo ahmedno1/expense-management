@@ -1,7 +1,7 @@
-# Expense Management System
+# Expense Manager
 
-A clean and modern **Expense Management System** built with **Laravel 12** and **PHP 8.2**.  
-The project provides a solid foundation for tracking expenses, managing users, and building financial reports.
+A clean and modern **Expense Manager** built with **Laravel 12** and **PHP 8.2**.  
+Track expenses, plan budgets, and generate month-specific AI recommendations.
 
 **Tech Stack:** Laravel 12 · PHP 8.2 · Blade · Livewire · Fortify · SQLite / MySQL
 
@@ -11,7 +11,10 @@ The project provides a solid foundation for tracking expenses, managing users, a
 
 - User authentication (Register / Login / Logout)
 - Secure configuration and encryption (Laravel standards)
-- Ready-to-extend architecture for expense tracking
+- Expense logging with categories
+- Monthly budgeting by category
+- Summary view (expected vs spent)
+- AI Advisor recommendations (current month)
 - Clean and maintainable project structure
 
 ---

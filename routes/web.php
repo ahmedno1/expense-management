@@ -10,6 +10,10 @@ use App\Livewire\Pages\Summary\Index as SummaryIndex;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
+    if (auth()->check()) {
+        return redirect()->route('dashboard');
+    }
+
     return view('welcome');
 })->name('home');
 
@@ -30,6 +34,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('categories.index');
     Route::get('/advisor', AdvisorIndex::class)
         ->name('advisor.index');
+
+    Route::view('/help', 'help')
+        ->name('help');
 });
 
 require __DIR__.'/settings.php';
